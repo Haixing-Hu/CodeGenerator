@@ -46,10 +46,6 @@ tasks {
     options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
   }
 
-  // 禁用buildSearchableOptions任务
-  named("buildSearchableOptions") {
-    enabled = false
-  }
 
   // 允许执行测试任务（用于问题复现）
   named<Test>("test") {
