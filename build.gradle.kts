@@ -30,10 +30,7 @@ dependencies {
     instrumentationTools()
   }
   implementation("org.apache.commons:commons-lang3:3.12.0")
-  implementation("org.apache.velocity.tools:velocity-tools-generic:3.1")  {
-    exclude(group = "org.apache.velocity", module = "velocity-engine-core")
-    exclude(group = "org.slf4j", module = "slf4j-api")
-  }
+  implementation("org.apache.velocity.tools:velocity-tools-generic:3.1")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
   testImplementation("junit:junit:4.13.2")
   testImplementation("org.mockito:mockito-core:5.10.0")
@@ -71,6 +68,18 @@ tasks {
         <li>修复打开插件设置时的空指针异常</li>
       </ul>
     """)
+  }
+
+  // 复制第三方依赖到lib文件夹
+  val copyDependencies by registering(Copy::class) {
+    from(configurations.runtimeClasspath)
+    into("$buildDir/libs/lib")
+    include("velocity-tools-generic-*.jar")
+    include("commons-lang3-*.jar")
+  }
+
+  build {
+    dependsOn(copyDependencies)
   }
 
   signPlugin {
