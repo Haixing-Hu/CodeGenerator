@@ -27,7 +27,6 @@ dependencies {
     bundledPlugin("com.intellij.java")
     pluginVerifier()
     zipSigner()
-    instrumentationTools()
   }
   implementation("org.apache.commons:commons-lang3:3.12.0")
   implementation("org.apache.velocity.tools:velocity-tools-generic:3.1") {
@@ -70,7 +69,7 @@ tasks {
   // 复制第三方依赖到lib文件夹
   val copyDependencies by registering(Copy::class) {
     from(configurations.runtimeClasspath)
-    into("$buildDir/libs/lib")
+    into(layout.buildDirectory.dir("libs/lib"))
     include("velocity-tools-generic-*.jar")
     include("commons-lang3-*.jar")
   }
