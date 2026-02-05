@@ -65,10 +65,10 @@ tasks {
     untilBuild.set("253.*")
     changeNotes.set("""
       <ul>
-        <li>Fix: method entry name now resolves to method name in templates</li>
-        <li>Support for IntelliJ IDEA 2025.1 - 2025.3</li>
-        <li>Fix settings dialog compatibility issue</li>
-        <li>Fix NullPointerException when opening plugin settings</li>
+        <li>修复：方法条目名称现在在模板中正确解析为方法名</li>
+        <li>支持 IntelliJ IDEA 2025.1 - 2025.3</li>
+        <li>修复设置对话框兼容性问题</li>
+        <li>修复打开插件设置时的空指针异常</li>
       </ul>
     """)
   }
