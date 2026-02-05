@@ -1,15 +1,23 @@
+import org.gradle.api.tasks.testing.Test
+
 plugins {
   id("java")
-  id("org.jetbrains.intellij.platform") version "2.0.1"
+  id("org.jetbrains.intellij.platform") version "2.11.0"
 }
 
 group = "me.lotabout"
-version = "2.0.5"
+version = "2.0.6"
 
 repositories {
   mavenCentral()
   intellijPlatform {
     defaultRepositories()
+  }
+}
+
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(18))
   }
 }
 
@@ -27,6 +35,7 @@ dependencies {
     exclude(group = "org.slf4j", module = "slf4j-api")
   }
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+  testImplementation("junit:junit:4.13.2")
   testImplementation("org.mockito:mockito-core:5.10.0")
   testImplementation("org.mockito:mockito-junit-jupiter:5.10.0")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
@@ -35,8 +44,8 @@ dependencies {
 tasks {
   // Set the JVM compatibility versions
   withType<JavaCompile> {
-    sourceCompatibility = "21"
-    targetCompatibility = "21"
+    sourceCompatibility = "18"
+    targetCompatibility = "18"
     options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
   }
 
@@ -45,9 +54,10 @@ tasks {
     enabled = false
   }
 
-  // 禁用测试任务
-  named("test") {
-    enabled = false
+  // 允许执行测试任务（用于问题复现）
+  named<Test>("test") {
+    enabled = true
+    useJUnitPlatform()
   }
 
   patchPluginXml {
@@ -55,6 +65,7 @@ tasks {
     untilBuild.set("253.*")
     changeNotes.set("""
       <ul>
+        <li>Fix: method entry name now resolves to method name in templates</li>
         <li>Support for IntelliJ IDEA 2025.1 - 2025.3</li>
         <li>Fix settings dialog compatibility issue</li>
         <li>Fix NullPointerException when opening plugin settings</li>
