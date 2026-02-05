@@ -30,7 +30,9 @@ dependencies {
     instrumentationTools()
   }
   implementation("org.apache.commons:commons-lang3:3.12.0")
-  implementation("org.apache.velocity.tools:velocity-tools-generic:3.1")
+  implementation("org.apache.velocity.tools:velocity-tools-generic:3.1") {
+    exclude(group = "org.apache.velocity", module = "velocity-engine-core")
+  }
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
   testImplementation("junit:junit:4.13.2")
   testImplementation("org.mockito:mockito-core:5.10.0")
