@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.ToolManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.java.generate.element.GenerationHelper;
@@ -44,8 +43,6 @@ import com.intellij.psi.search.PsiShortNamesCache;
 import me.lotabout.codegenerator.config.include.Include;
 
 public class GenerationUtil {
-
-    public static final String VELOCITY_TOOLS_CONFIG = "/velocity-tools.xml";
 
     private static final Logger logger = Logger.getInstance(GenerationUtil.class);
 
@@ -142,9 +139,7 @@ public class GenerationUtil {
         }
         final StringWriter sw = new StringWriter();
         try {
-            final ToolManager toolManager = new ToolManager(false, true);
-            toolManager.configure(VELOCITY_TOOLS_CONFIG);
-            final Context vc = toolManager.createContext();
+            final Context vc = new org.apache.velocity.VelocityContext();
             for (final var paramName : contextMap.keySet()) {
                 vc.put(paramName, contextMap.get(paramName));
             }
