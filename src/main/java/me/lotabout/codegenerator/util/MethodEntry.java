@@ -93,6 +93,12 @@ public class MethodEntry implements MemberEntry<PsiMethod> {
         return raw;
     }
 
+    @Override
+    public String getName() {
+        final String methodName = element.getMethodName();
+        return methodName != null ? methodName : element.getName();
+    }
+
     public String getMethodName() {
         return element.getMethodName();
     }
